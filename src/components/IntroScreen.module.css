@@ -1,0 +1,18 @@
+/* src/components/IntroScreen.module.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    /* Add background, fonts, and other styles from Figma */
+  }
+  
+  .title {
+    /* Add title styling from Figma */
+  }
+  
+  .startButton {
+    /* Add button styling from Figma */
+  }
+  
