@@ -1,6 +1,6 @@
-// src/components/IntroScreen.tsx
+
 import React from 'react';
-import styles from './IntroScreen.module.css'; // Ensure you have the corresponding CSS module file
+import styles from './IntroScreen.module.css';
 
 interface IntroScreenProps {
   onStartGame: () => void;

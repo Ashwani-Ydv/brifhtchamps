@@ -1,7 +1,7 @@
-// src/components/GameBoard.tsx
 import React, { useState, useEffect } from 'react';
-import { GameItem } from '../types'; // Import the GameItem type definition
+import { GameItem } from '../types'; 
 import Card from './Card';
+import './GameBoard.css'; 
 
 interface GameBoardProps {
   onEndGame: () => void; // Callback when the game ends
@@ -12,15 +12,9 @@ const GameBoard: React.FC<GameBoardProps> = ({ onEndGame }) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [canSelect, setCanSelect] = useState(true); // Control if the user can select new cards
 
-  // Function to shuffle items - to be implemented
-  const shuffleItems = (items: GameItem[]): GameItem[] => {
-    // Shuffle logic here
-    return items;
-  };
-
   // Effect to initialize the game
   useEffect(() => {
-    fetch('/gameItems.json') // Adjust the path to your game items data
+    fetch('/gameItems.json')
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -28,13 +22,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ onEndGame }) => {
         return response.json();
       })
       .then((data) => {
-        // Duplicate, shuffle, and set the game items
-        const doubledData = [...data, ...data].map((item, index) => ({
-          ...item,
-          id: `${item.id}-${index}`, // Ensure unique IDs for duplicates
-          matched: false
-        }));
-        setItems(shuffleItems(doubledData));
+        setItems(data);
       })
       .catch((error) => {
         console.error('Error fetching game items:', error);
@@ -49,16 +37,15 @@ const GameBoard: React.FC<GameBoardProps> = ({ onEndGame }) => {
     setSelectedItems(newSelectedItems);
 
     if (newSelectedItems.length === 2) {
-      setCanSelect(false); // Prevent further selections
+      setCanSelect(false); 
       checkForMatch(newSelectedItems);
     }
   };
 
-  // Check if the selected cards are a match
   const checkForMatch = (selectedIds: string[]) => {
     const [firstId, secondId] = selectedIds;
 
-    // Implement logic to check if items match and update the state accordingly
+    // Implementing logic to check if items match and update the state accordingly
     const firstItem = items.find(item => item.id === firstId);
     const secondItem = items.find(item => item.id === secondId);
 
@@ -74,20 +61,20 @@ const GameBoard: React.FC<GameBoardProps> = ({ onEndGame }) => {
       setTimeout(() => {
         setSelectedItems([]);
         setCanSelect(true);
-      }, 1000); // Adjust delay as needed
+      }, 1000); 
     }
   };
 
-  // Handle the end game scenario
+  //  end game scenario
   const handleEndGame = () => {
     onEndGame();
   };
 
   console.log("items",items);
 
-  // Render the game board
+  //  the game board
   return (
-    <div className="game-board">
+    <div className="card-container">
       {items.map((item) => (
         <Card
           key={item.id}

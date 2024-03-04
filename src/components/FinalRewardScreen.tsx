@@ -1,4 +1,3 @@
-// src/components/FinalRewardScreen.tsx
 import React from 'react';
 import styles from './FinalRewardScreen.module.css'; // Ensure you have the corresponding CSS module file
 

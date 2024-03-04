@@ -1,4 +1,3 @@
-/* FinalRewardScreen.module.css */
 
 .container {
     display: flex;
@@ -6,27 +5,27 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #f7f7f7; /* Replace with your background color */
-    color: #333; /* Replace with your text color */
+    background-color: #f7f7f7;
+    color: #333;
     text-align: center;
   }
   
   .title {
-    font-size: 3rem; /* Replace with the size from your design */
+    font-size: 3rem;
     margin-bottom: 1rem;
-    color: #4CAF50; /* Replace with the color from your design */
+    color: #4CAF50;
   }
   
   .rewardMessage {
-    font-size: 1.5rem; /* Replace with the size from your design */
+    font-size: 1.5rem;
     margin-bottom: 2rem;
   }
   
   .restartButton {
     padding: 10px 20px;
-    font-size: 1rem; /* Replace with the size from your design */
-    background-color: #FFD700; /* Replace with your button background color */
-    color: white; /* Replace with your button text color */
+    font-size: 1rem; 
+    background-color: #FFD700;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -34,8 +33,7 @@
   }
   
   .restartButton:hover {
-    background-color: #FFC107; /* Darker shade for hover state */
+    background-color: #FFC107;
   }
   
-  /* Add any additional styles or animations for the final reward screen */
   
