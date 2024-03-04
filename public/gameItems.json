@@ -1,12 +1,72 @@
 [
     {
         "id": "1",
-        "image": "path/to/image1",
+        "image": "./IntroScreen.png",
         "matched": false
     },
     {
         "id": "2",
-        "image": "path/to/image2",
+        "image": "IntroScreen1.png",
+        "matched": false
+    },
+    {
+        "id": "3",
+        "image": "IntroScreen2.png",
+        "matched": false
+    },
+    {
+        "id": "4",
+        "image": "InstructionScreen.png",
+        "matched": false
+    },
+    {
+        "id": "5",
+        "image": "ActivityScreen.png",
+        "matched": false
+    },
+    {
+        "id": "6",
+        "image": "ActivityScreen1.png",
+        "matched": false
+    },
+    {
+        "id": "7",
+        "image": "ActivityScreen2.png",
+        "matched": false
+    },
+    {
+        "id": "8",
+        "image": "ActivityScreen3.png",
+        "matched": false
+    },
+    {
+        "id": "9",
+        "image": "ActivityScreen4.png",
+        "matched": false
+    },
+    {
+        "id": "10",
+        "image": "ActivityScreen5.png",
+        "matched": false
+    },
+    {
+        "id": "11",
+        "image": "ActivityScreen6.png",
+        "matched": false
+    },
+    {
+        "id": "12",
+        "image": "ActivityScreen7.png",
+        "matched": false
+    },
+    {
+        "id": "13",
+        "image": "ActivityScreen8.png",
+        "matched": false
+    },
+    {
+        "id": "14",
+        "image": "FinalRewardsScreenss.png",
         "matched": false
     }
 ]

@@ -83,6 +83,8 @@ const GameBoard: React.FC<GameBoardProps> = ({ onEndGame }) => {
     onEndGame();
   };
 
+  console.log("items",items);
+
   // Render the game board
   return (
     <div className="game-board">
