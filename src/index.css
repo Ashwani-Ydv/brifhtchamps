@@ -13,3 +13,14 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.card.selected, .card.matched {
+  transform: scale(1.1); /* Highlight selected/matched cards */
+}
+
+.card-back {
+  /* Style for the back of the card */
+  background-color: #eee;
+  width: 100px;
+  height: 150px;
+}
