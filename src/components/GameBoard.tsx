@@ -1,86 +1,102 @@
 // src/components/GameBoard.tsx
-import React, { useEffect, useState } from 'react';
-import { GameItem } from '../types';
+import React, { useState, useEffect } from 'react';
+import { GameItem } from '../types'; // Import the GameItem type definition
 import Card from './Card';
 
-const GameBoard: React.FC = () => {
+interface GameBoardProps {
+  onEndGame: () => void; // Callback when the game ends
+}
+
+const GameBoard: React.FC<GameBoardProps> = ({ onEndGame }) => {
   const [items, setItems] = useState<GameItem[]>([]);
-  const [selectedItems, setSelectedItems] = useState<string[]>([]); // Changed to track IDs of selected items
-  const [matches, setMatches] = useState(0);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [canSelect, setCanSelect] = useState(true); // Control if the user can select new cards
 
-useEffect(() => {
-    // Load and shuffle game items from JSON file
-    fetch('/gameItems.json')
-        .then((res) => res.json())
-        .then((data) => {
-            const doubledData = [...data, ...data.map((item: GameItem) => ({ ...item, id: `copy-${item.id}` }))]; // Ensure unique IDs for duplicates
-            setItems(shuffleItems(doubledData));
-        });
-}, []);
-
-  // Fisher-Yates (Knuth) Shuffle
+  // Function to shuffle items - to be implemented
   const shuffleItems = (items: GameItem[]): GameItem[] => {
-    let currentIndex = items.length, randomIndex;
-
-    // While there remain elements to shuffle...
-    while (currentIndex !== 0) {
-
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-
-      // And swap it with the current element.
-      [items[currentIndex], items[randomIndex]] = [
-        items[randomIndex], items[currentIndex]];
-    }
-
+    // Shuffle logic here
     return items;
   };
 
-  const handleSelectItem = (selectedItem: GameItem) => {
-    // Prevent selecting more than two items
-    if (selectedItems.length === 2) return;
+  // Effect to initialize the game
+  useEffect(() => {
+    fetch('/gameItems.json') // Adjust the path to your game items data
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Duplicate, shuffle, and set the game items
+        const doubledData = [...data, ...data].map((item, index) => ({
+          ...item,
+          id: `${item.id}-${index}`, // Ensure unique IDs for duplicates
+          matched: false
+        }));
+        setItems(shuffleItems(doubledData));
+      })
+      .catch((error) => {
+        console.error('Error fetching game items:', error);
+      });
+  }, []);
 
-    const newSelectedItems = [...selectedItems, selectedItem.id];
+  // Handle card selection
+  const handleCardSelect = (id: string) => {
+    if (!canSelect || selectedItems.includes(id)) return;
+
+    const newSelectedItems = [...selectedItems, id];
     setSelectedItems(newSelectedItems);
 
-    // Check for match if two items have been selected
     if (newSelectedItems.length === 2) {
-      const [firstItem, secondItem] = newSelectedItems.map(id =>
-        items.find(item => item.id === id)
-      );
-
-      if (firstItem && secondItem && firstItem.image === secondItem.image) {
-        // Match found
-        setMatches(matches + 1);
-        setItems(prevItems => prevItems.map(item => 
-          item.id === firstItem.id || item.id === secondItem.id ? { ...item, matched: true } : item
-        ));
-        setSelectedItems([]);
-      } else {
-        // No match, reset after a short delay
-        setTimeout(() => {
-          setSelectedItems([]);
-        }, 1000);
-      }
+      setCanSelect(false); // Prevent further selections
+      checkForMatch(newSelectedItems);
     }
   };
 
+  // Check if the selected cards are a match
+  const checkForMatch = (selectedIds: string[]) => {
+    const [firstId, secondId] = selectedIds;
 
-// ...
+    // Implement logic to check if items match and update the state accordingly
+    const firstItem = items.find(item => item.id === firstId);
+    const secondItem = items.find(item => item.id === secondId);
 
-return (
+    if (firstItem && secondItem && firstItem.image === secondItem.image) {
+      // If they match, mark them as matched
+      setItems(prevItems => prevItems.map(item => 
+        item.id === firstId || item.id === secondId ? { ...item, matched: true } : item
+      ));
+      setSelectedItems([]);
+      setCanSelect(true);
+    } else {
+      // If they don't match, flip them back over after a delay
+      setTimeout(() => {
+        setSelectedItems([]);
+        setCanSelect(true);
+      }, 1000); // Adjust delay as needed
+    }
+  };
+
+  // Handle the end game scenario
+  const handleEndGame = () => {
+    onEndGame();
+  };
+
+  // Render the game board
+  return (
     <div className="game-board">
-        {items.map((item) => (
-            <Card 
-            key={item.id} 
-            item={item} 
-            onSelect={handleSelectItem} 
-            // selected={selectedItems.includes(item.id)} 
-            />
-        ))}
+      {items.map((item) => (
+        <Card
+          key={item.id}
+          item={item}
+          onSelect={handleCardSelect}
+          selected={selectedItems.includes(item.id)}
+        />
+      ))}
+      <button onClick={handleEndGame}>End Game</button>
     </div>
-);
+  );
 };
 
 export default GameBoard;
